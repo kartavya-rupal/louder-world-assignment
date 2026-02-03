@@ -59,7 +59,7 @@ export default function ImportModal({ event, onClose }: any) {
 
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                         <p className="text-xs text-foreground">
-                            This event will be imported to your dashboard and you'll be able to manage tickets and attendees.
+                            This event will be imported to your dashboard and you&apos;ll be able to manage tickets and attendees.
                         </p>
                     </div>
                 </div>
