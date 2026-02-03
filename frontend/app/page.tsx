@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+
+
 import api from "@/lib/axios";
 import { Calendar } from "lucide-react";
 import EventCard from "./components/EventCard";
