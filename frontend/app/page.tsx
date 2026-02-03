@@ -1,17 +1,36 @@
 "use client";
 
-
+import { useEffect, useState } from "react";
 import api from "@/lib/axios";
 import { Calendar } from "lucide-react";
 import EventCard from "./components/EventCard";
 
-async function getEvents() {
-  const res = await api.get("/events");
-  return res.data;
-}
+export default function Home() {
+  const [events, setEvents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function Home() {
-  const events = await getEvents();
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await api.get("/events");
+        setEvents(res.data);
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="bg-background min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">Loading events...</p>
+      </main>
+    );
+  }
 
   return (
     <main className="bg-background min-h-screen">
@@ -20,8 +39,12 @@ export default async function Home() {
           <div className="flex items-start gap-3 mb-2">
             <Calendar className="w-8 h-8 text-primary mt-1" />
             <div>
-              <h1 className="text-4xl font-semibold text-foreground">Discover Events</h1>
-              <p className="text-muted-foreground mt-1">Find and get tickets to amazing events near you</p>
+              <h1 className="text-4xl font-semibold text-foreground">
+                Discover Events
+              </h1>
+              <p className="text-muted-foreground mt-1">
+                Find and get tickets to amazing events near you
+              </p>
             </div>
           </div>
         </div>
@@ -32,8 +55,12 @@ export default async function Home() {
               <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
                 <Calendar className="w-8 h-8 text-muted-foreground" />
               </div>
-              <h2 className="text-lg font-semibold text-foreground mb-1">No Events Available</h2>
-              <p className="text-muted-foreground">Check back soon for upcoming events</p>
+              <h2 className="text-lg font-semibold text-foreground mb-1">
+                No Events Available
+              </h2>
+              <p className="text-muted-foreground">
+                Check back soon for upcoming events
+              </p>
             </div>
           ) : (
             <>
